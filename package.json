@@ -14,6 +14,7 @@
     "prepare": "vp config"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.103.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-query": "latest",
