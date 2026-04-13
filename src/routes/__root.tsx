@@ -1,10 +1,14 @@
-import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import Footer from "../components/Footer";
+
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
+import { getContext } from "../integrations/tanstack-query/root-provider";
+
+import { QueryClientProvider } from "@tanstack/react-query";
 
 import appCss from "../styles.css?url";
 
@@ -17,9 +21,7 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
-      {
-        charSet: "utf-8",
-      },
+      { charSet: "utf-8" },
       {
         name: "viewport",
         content: "width=device-width, initial-scale=1",
@@ -30,16 +32,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       {
         name: "description",
         content:
-          "ASMA Academy - Maths Masters is a comprehensive online learning platform designed to help students excel in mathematics. Our curriculum covers a wide range of topics, from basic arithmetic to advanced calculus, tailored to meet the needs of learners at all levels. With interactive lessons, practice exercises, and expert guidance, we empower students to build a strong foundation in math and achieve their academic goals.",
-      },
-      {
-        name: "keywords",
-        content:
-          "ASMA Academy, Maths Masters, online learning, mathematics, interactive lessons, practice exercises, expert guidance, academic goals",
-      },
-      {
-        name: "author",
-        content: "ASMA Academy",
+          "ASMA Academy - Maths Masters is a comprehensive online learning platform designed to help students excel in mathematics.",
       },
     ],
     links: [
@@ -49,7 +42,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       },
     ],
   }),
+
   shellComponent: RootDocument,
+  component: RootProviders,
+
   notFoundComponent: () => (
     <div className="p-6 text-center">
       <h1 className="text-3xl font-bold">404</h1>
@@ -65,23 +61,38 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="font-sans antialiased [wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            TanStackQueryDevtools,
-          ]}
-        />
+        {children}
         <Scripts />
       </body>
     </html>
+  );
+}
+
+function RootProviders() {
+  const { queryClient } = getContext();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Header />
+
+      <main className="min-h-screen px-4 md:px-42">
+        <Outlet />
+      </main>
+
+      <Footer />
+
+      <TanStackDevtools
+        config={{
+          position: "bottom-right",
+        }}
+        plugins={[
+          {
+            name: "Tanstack Router",
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+          TanStackQueryDevtools,
+        ]}
+      />
+    </QueryClientProvider>
   );
 }

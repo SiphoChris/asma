@@ -82,7 +82,9 @@ export default function Footer() {
           <span>
             &copy; {year} {footerConfig.legal}
           </span>
-          <span className="text-(--sea-ink-soft)/60">Built for South African students</span>
+          <span className="text-(--sea-ink-soft)/60">
+            Your trusted learning partner in mathematics
+          </span>
         </div>
       </div>
     </footer>

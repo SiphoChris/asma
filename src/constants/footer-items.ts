@@ -40,7 +40,7 @@ export const footerConfig: FooterConfig = {
   brand: {
     name: "ASMA Academy",
     tagline:
-      "Maths and Physical Sciences tutoring for South African high school students, built on the CAPS curriculum.",
+      "ASMA Academy - Maths Masters, online learning, mathematics, interactive lessons, practice exercises, expert guidance, academic goals. Built on the CAPS curriculum.",
   },
 
   columns: [

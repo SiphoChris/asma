@@ -4,11 +4,11 @@ import { Button } from "./ui/button";
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-between py-4 md:py-6 px-4 md:px-12">
+    <header className="flex items-center justify-between py-4 md:py-6 px-4 md:px-42">
       <h1 role="logo" className="text-2xl font-bold">
         ASMA
       </h1>
-      <ul className="flex gap-8">
+      <ul className="flex gap-4 md:gap-12">
         {NAV_LINKS.map((link) => (
           <li key={link.path}>
             <Link to={link.path}>{link.name}</Link>
