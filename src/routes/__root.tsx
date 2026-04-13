@@ -14,8 +14,6 @@ interface MyRouterContext {
   queryClient: QueryClient;
 }
 
-const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`;
-
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
@@ -27,7 +25,21 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "TanStack Start Starter",
+        title: "ASMA Academy - Maths Masters",
+      },
+      {
+        name: "description",
+        content:
+          "ASMA Academy - Maths Masters is a comprehensive online learning platform designed to help students excel in mathematics. Our curriculum covers a wide range of topics, from basic arithmetic to advanced calculus, tailored to meet the needs of learners at all levels. With interactive lessons, practice exercises, and expert guidance, we empower students to build a strong foundation in math and achieve their academic goals.",
+      },
+      {
+        name: "keywords",
+        content:
+          "ASMA Academy, Maths Masters, online learning, mathematics, interactive lessons, practice exercises, expert guidance, academic goals",
+      },
+      {
+        name: "author",
+        content: "ASMA Academy",
       },
     ],
     links: [
@@ -38,16 +50,21 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: () => (
+    <div className="p-6 text-center">
+      <h1 className="text-3xl font-bold">404</h1>
+      <p className="mt-2">Page not found</p>
+    </div>
+  ),
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
+      <body className="font-sans antialiased [wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
         <Header />
         {children}
         <Footer />
